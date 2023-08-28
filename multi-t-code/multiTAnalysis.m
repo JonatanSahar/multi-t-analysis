@@ -26,34 +26,4 @@ function multiTAnalysis()
     %% call level two analysis
     multiTLevel2(P);
 
-    return
-
-    %% FDR correction
-    for  cond = P.conditions
-        cmd= sprintf("fdr -i %s -m %s -q 0.05", fullfile(P.multiResDirName, sprintf('%d_pMap.nii.gz', cond)),  fullfile(params.dataDir,"standard_MNI_mask.nii.gz"));
-        cmd
-        system(cmd);
-    end
-
-%     %% create Pmasks
-%     thresh=0.0001;
-%     create_Pval_mask(P.multiResDirName, thresh,TRafterEV)
-%     % create_Pval_mask_forBrainView(mapDir,thresh,TRafterEV)
-
-%     %% overlap or subtract masks (conditions)
-%     bin_maps=dir(fullfile(outFolder,('*' 'Pmask_trsh01.nii')));
-%     bin_maps={bin_maps(:).name};
-%     map1=bin_maps{2};
-%     map2=bin_maps{1};
-%     map_mult_or_subt(outFolder,map1,map2,1)
-
-%     %%% visualize maps
-%     dataDir=P.multiResDirName;
-%     maskfn = fullfile(dataDir,'hand_Pmap_pc_TR1_peakTR5_mcRej_nov20_Pmask_trsh0001.nii');
-
-%     V = niftiread(maskfn);
-%     thresh=0.0001;
-%     tMapName='L_yn_withneighbours_0001';
-%     create_neighborsP_map(dataDir,maskfn,thresh,tMapName)
-
 end
