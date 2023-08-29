@@ -1,11 +1,11 @@
 function testMultiTanalysis_semotor_pe(subject,condition,numShuffels)
 params.regionSize      = 27; % sl size
 params.numShuffels     =numShuffels;
-params.multiResDirName=fullfile('../multit','results_pe_4.4.20');
+params.resultsDir=fullfile('../multit','results_pe_4.4.20');
 params.TmapName=['pe_MNI_tmap'];
 params.dataDir=fullfile(pwd,'/pilot_data');
-params.multiDataLoc=fullfile(params.dataDir,num2str(subject),'/derive/pe_data/forMultiT');
-params.multiout_dir=fullfile(params.dataDir,num2str(subject) ,'/derive','multiTmaps_pe_4.4.20');
+params.dataLocation=fullfile(params.dataDir,num2str(subject),'/derive/pe_data/forMultiT');
+params.outputDir=fullfile(params.dataDir,num2str(subject) ,'/derive','multiTmaps_pe_4.4.20');
 addpath('../multit/code/helper_functions');
 %addpath('neuroelf');
 addpath('../../niiTool');
@@ -15,10 +15,10 @@ maskfn = fullfile(params.dataDir,'commonM_allSubs_MNI.nii.gz');
 niifile = load_untouch_nii(maskfn);
 niidata =  niifile.img;
 [lidx, locations ] = getLocationsFromMaskNii(niidata);
-% resultsDirName=params.multiResDirName;
+% resultsDirName=params.resultsDir;
 
-if ~exist(params.multiResDirName)
-    mkdir(params.multiResDirName)
+if ~exist(params.resultsDir)
+    mkdir(params.resultsDir)
 end
 %% load pe data for one subject
 % %If analyzing pe
@@ -42,12 +42,12 @@ end
 
 %% load PC data for one subject
 %If analyzing pc
-% data_loc=params.multiDataLoc;
+% data_loc=params.dataLocation;
 
 
-load(fullfile(params.multiDataLoc,'all_labels.mat'));
+load(fullfile(params.dataLocation,'all_labels.mat'));
 labels=all_labels.(char(condition));
-load(fullfile(params.multiDataLoc,'all_data.mat'));
+load(fullfile(params.dataLocation,'all_data.mat'));
 cond_data=all_data.(char(condition));
 
 data   = zeros(size(cond_data,4),size(locations,1)); % initizlie data
@@ -115,7 +115,7 @@ for i = 1:(params.numShuffels + 1) % loop on shuffels
 end
 timing=toc(start);
 fnOut = [num2str(subject),condition, datestr(clock,30) 'withShuffling_' num2str(params.numShuffels) '.mat'];
-save(fullfile(params.multiResDirName,fnOut));
+save(fullfile(params.resultsDir,fnOut));
 % msgtitle = sprintf('Finished sub %.3d ',subnum);
 
 %%
@@ -127,11 +127,11 @@ zeroimag = zeros(size(niidata));
 zeroimag(lidx) = ansMat(:,1);
 niifile.img = zeroimag;
 % mulTout_dir=fullfile(dataDir,num2str(subject) ,'/derive/multiTres_pc_2.4.20');
-if ~exist(params.multiout_dir)
-    mkdir(params.multiout_dir);
+if ~exist(params.outputDir)
+    mkdir(params.outputDir);
 end
 
 TmapName=[condition '_' params.TmapName '_' num2str(params.numShuffels) 'shuffels'];
-outfile=fullfile(params.multiout_dir,TmapName);
+outfile=fullfile(params.outputDir,TmapName);
 save_untouch_nii(niifile,outfile);
 end
