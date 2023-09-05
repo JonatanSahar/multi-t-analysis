@@ -1,7 +1,6 @@
 function singleSubjectMultiT(subject, condition, tMapName, P)
 % ⇒ condition must be one of "LE", "RE", "LH", "RH"
 % This function operates on a single subject's data. It takes the data and labels produced by [[file:~/Code/fMRI-pipeline/createMultiTDataMotor.m]] and computes - per voxel - the multi T statistic regarding the separation between the two label classes. It only computes the above for voxels marked as belonging to the MNI152 brain mask
-    addpath("./helper_functions");
     %% load mask
     niidata=niftiread(P.MNIMask);
     niiheader=niftiinfo(P.MNIMask);
@@ -48,17 +47,18 @@ function singleSubjectMultiT(subject, condition, tMapName, P)
         dataX = data(idxX,idx(j,:));
         dataY = data(idxY,idx(j,:));
         xzeros(j) = sum(sum(dataX,1) == 0);
-        yzeros(j) = sum(sum(dataX,1) == 0);
+        yzeros(j) = sum(sum(dataY,1) == 0);
     end
     if max(xzeros(xzeros~=0)) == P.regionSize
-        error('in your data x you %d have voxels with zeros')
-        disp('\n %d search light with zeros  in x\n',...
+        disp('\n %d search lights with zeros in x\n',...
              sum(xzeros==P.regionSize));
         disp('\n %d x voxels with at least 1 zero voxel\n',...
-             sum(xzeros~=0));
-    end
+             sum(xzeros~=0)); 
+        error('in your data x you have voxels with zeros')
+    end       
+
     if max(yzeros(yzeros~=0)) == P.regionSize
-        error('in your data x you %d have voxels with zeros')
+        error('in your data y you %d have voxels with zeros')
         disp('\n %d search light with zeros  in y\n',...
              sum(yzeros==P.regionSize));
         disp('\n %d y voxels with at least 1 zero voxel\n',...
@@ -106,6 +106,7 @@ function singleSubjectMultiT(subject, condition, tMapName, P)
 
     outfile=fullfile(P.outputDir,tMapName)
     % save_untouch_nii(niifile,outfile);
-    niftiwrite(single(tMapImage), outfile, niiheader, 'Compressed',true)
+    image = uint8(tMapImage);
+    niftiwrite(image, outfile, niiheader, 'Compressed',true)
     fprintf("finished subject no. %d, condition: %s", subject, condition);
 end

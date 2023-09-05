@@ -2,13 +2,13 @@ function multiTAnalysis()
     rng('default')
     addpath("./multiT-code-from-paper")
     addpath("./multiT-code-from-paper/helper_functions")
-    P.numShuffels = 100;
-    P.subjects=[101:116];
-    % P.subjects=[106];
+    P.numShuffels = 10;
+    % P.subjects=[101:106];
+    P.subjects=[101];
     P.discardedSubjects=[102, 104, 105, 107, 113];
     P.subjects = setdiff(P.subjects, P.discardedSubjects);
     P.earConditions=["LE", "RE"];
-    P.handConditions=["LE", "RE"];
+    P.handConditions=["motor"];
     P.conditions=P.handConditions;
 
     P.audiomotorResults=fullfile("../multi-t-results/audiomotor");
