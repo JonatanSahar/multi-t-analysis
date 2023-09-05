@@ -1,12 +1,10 @@
 function multiTAnalysis()
-
     rng('default')
-    addpath('../niiTool')
     addpath("./multiT-code-from-paper")
     addpath("./multiT-code-from-paper/helper_functions")
     P.numShuffels = 100;
     P.subjects=[101:116];
-    % P.subjects=[101];
+    % P.subjects=[106];
     P.discardedSubjects=[102, 104, 105, 107, 113];
     P.subjects = setdiff(P.subjects, P.discardedSubjects);
     P.earConditions=["LE", "RE"];
@@ -22,8 +20,8 @@ function multiTAnalysis()
     P.dataDir=P.motorDataDir;
 
     P.regionSize  = 27; % sl size
-    P.MNIMask = fullfile(P.dataDir,"standard_MNI_mask.nii.gz");
-    P.MNIMaskIndex = fullfile(P.dataDir,"standard_MNI_mask_index.mat");
+    P.MNIMask = fullfile("../multi-t-data/", "MNI152_T1_2mm_brain_mask.nii.gz");
+    P.MNIMaskIndex = fullfile("../multi-t-data/", "MNI152_T1_2mm_brain_mask_INDEX.mat");
     P.dataLocation=P.dataDir;
     P.outputDir=P.resultsDir;
 

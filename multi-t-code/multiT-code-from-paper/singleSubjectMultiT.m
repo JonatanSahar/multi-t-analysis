@@ -1,13 +1,11 @@
 function singleSubjectMultiT(subject, condition, tMapName, P)
 % ⇒ condition must be one of "LE", "RE", "LH", "RH"
-
+% This function operates on a single subject's data. It takes the data and labels produced by [[file:~/Code/fMRI-pipeline/createMultiTDataMotor.m]] and computes - per voxel - the multi T statistic regarding the separation between the two label classes. It only computes the above for voxels marked as belonging to the MNI152 brain mask
     addpath("./helper_functions");
     %% load mask
-    % TODO: ask Shahar - is the PSC matrix not already clipped to the MNI brain? It went through applywarp
     niidata=niftiread(P.MNIMask);
     niiheader=niftiinfo(P.MNIMask);
-    % This is the mapping between (brain, mask=1) voxels in 3D and their linear index in each row of the data=trialsXvoxels
-    % the matrix
+    % This is the mapping between brain (mask=1) voxels in 3D and their linear index in each row of the data=trialsXvoxels matrix
     linearIndex=find(niidata);
     [x,y,z]=ind2sub(size(niidata),linearIndex);
     locations=[x,y,z];
