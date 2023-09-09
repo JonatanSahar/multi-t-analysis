@@ -50,10 +50,10 @@ function singleSubjectMultiT(subject, condition, tMapName, P)
         yzeros(j) = sum(sum(dataY,1) == 0);
     end
     if max(xzeros(xzeros~=0)) == P.regionSize
-        disp('\n %d search lights with zeros in x\n',...
-             sum(xzeros==P.regionSize));
-        disp('\n %d x voxels with at least 1 zero voxel\n',...
-             sum(xzeros~=0)); 
+%         disp("\n %d search lights with zeros in x\n",...
+%              sum(xzeros==P.regionSize));
+%         disp('\n %d x voxels with at least 1 zero voxel\n',...
+%              sum(xzeros~=0)); 
         error('in your data x you have voxels with zeros')
     end       
 
