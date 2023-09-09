@@ -13,6 +13,9 @@ function singleSubjectMultiT(subject, condition, tMapName, P)
         mkdir(P.resultsDir)
     end
 
+    if ~exist(P.MNIMaskIndex, "file")
+    save(fullfile(P.MNIMaskIndex), "linearIndex", "locations", '-v7.3');
+    end
     %% load PC data for one subject
     %If analyzing pc
     % data_loc=P.dataLocation;

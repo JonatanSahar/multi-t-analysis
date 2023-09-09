@@ -14,5 +14,5 @@ for s = 1:length(P.subjects)
         singleSubjectMultiT(subId, cond, tMapName, P);
     end
 end
-fprintf("elapsed time for %d subjects: %d\n", length(P.subjects), toc)
+fprintf("elapsed time for %d subjects: %d minutes\n", length(P.subjects), round(toc/60))
 end

@@ -2,21 +2,24 @@ function multiTAnalysis()
     rng('default')
     addpath("./multiT-code-from-paper")
     addpath("./multiT-code-from-paper/helper_functions")
-    P.numShuffels = 10;
-    % P.subjects=[101:106];
-    P.subjects=[101];
+    P.numShuffels = 100;
+    P.subjects=[101:116];
+    % P.subjects=[101];
     P.discardedSubjects=[102, 104, 105, 107, 113];
     P.subjects = setdiff(P.subjects, P.discardedSubjects);
     P.earConditions=["LE", "RE"];
     P.handConditions=["motor"];
+    % P.conditions=P.earConditions;
     P.conditions=P.handConditions;
 
     P.audiomotorResults=fullfile("../multi-t-results/audiomotor");
     P.motorResults=fullfile("../multi-t-results/motor-only");
+    % P.resultsDir=P.audiomotorResults;
     P.resultsDir=P.motorResults;
 
     P.audiomotorDataDir=fullfile(pwd,"../multi-t-data/audiomotor");
     P.motorDataDir=fullfile(pwd,"../multi-t-data/motor-only");
+    % P.dataDir=P.audiomotorDataDir;
     P.dataDir=P.motorDataDir;
 
     P.regionSize  = 27; % sl size
