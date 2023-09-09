@@ -26,7 +26,7 @@ end
 zeroimag = zeros(size(maskData));
 % zeroimag = zeros([91,109,91]);% background
 zeroimag(P.linearIndex) = Pval;
-niifile = single(zeroimag);
+niifile = uint8(zeroimag);
 
 PmapName= sprintf('%s_pMmap', condition);
 mkdir(outFolder);
